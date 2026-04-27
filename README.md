@@ -6,5 +6,5 @@ The corpus for this project is **The Prevention of Cruelty to Animals Act, 1960 
 
     - Animals are not just property, they are family and sentient beings deserving of all the same (or more, nothing less) love and respect we afford our fellow humans.
 
-    > *"Until one has loved an animal, a part of one's soul remains unawakend."* — **Anatole France**
+> *"Until one has loved an animal, a part of one's soul remains unawakend."* — **Anatole France**
 
