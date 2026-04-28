@@ -217,5 +217,12 @@ $RECYCLE.BIN/
 
 # Windows shortcuts
 *.lnk
+# local only
 
+# in .gitignore
+data/index.faiss
+data/raw/
+__pycache__/
+*.pyc
+.env
 # End of https://www.toptal.com/developers/gitignore/api/python,visualstudiocode,windows
