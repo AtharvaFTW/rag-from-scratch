@@ -79,13 +79,24 @@ def chunker(text: str, chunk_size: int, overlap_size: int, source:str = "unknown
     
     return res
 
+def corpus_builder(data_dir: Path, chunk_size: int, overlap_size: int) -> list[dict]:
+
+    res = []
+
+    for dir in data_dir.glob("*.pdf"):
+        corpus = load_document(pdf_path = dir)
+        cleaned_corpus = clean_text(corpus)
+        chunks = chunker(cleaned_corpus, chunk_size, overlap_size, source = dir.name)
+        res.extend(chunks)
+    
+    return res
+
+
+
 
 
 if __name__ == "__main__":
-    data = load_document(r"data\raw\the_prevention_of_cruelty_to_animals_act_1960.pdf")
-    clean = clean_text(data)
-    chunks = chunker(clean, chunk_size = 512, overlap_size = 50)
-    print(f"Total chunks: {len(chunks)}")
-    print(chunks[0]["chunk_index"])
-    print(chunks[1]["chunk_index"])
-    assert chunks[1]["text"][:50*4] == chunks[0]["text"][-50*4:]
+    corpus = corpus_builder(Path("data/raw"), chunk_size=512, overlap_size=50)
+    print(f"Total chunks across all documents: {len(corpus)}")
+    print(corpus[0]["source"])
+    print(corpus[-1]["source"])
