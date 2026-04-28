@@ -1,6 +1,6 @@
 # Retrieval-Augmented Generation Pipeline with Full Evaluation Suite
 
-**The corpus consists of:**
+**The Corpus consists of:**
 
 - The Prevention of Cruelty to Animals Act, 1960
 
