@@ -27,10 +27,11 @@ def clean_text(text: str) -> str:
     
     text = text.replace("_","")
     text = re.sub(r' +',' ', text)
+    text = re.sub(r'\n+','\n', text)
 
     return text
 
-def chunker(text: str, chunk_size: int, overlap_size: int) -> list[dict]:
+def chunker(text: str, chunk_size: int, overlap_size: int, source:str = "unknown" ) -> list[dict]:
     """
     This functions breaks down the corpus into chunks with given size. 
 
@@ -59,7 +60,7 @@ def chunker(text: str, chunk_size: int, overlap_size: int) -> list[dict]:
         chunk = {
             "text":str(chunk_text),
             "chunk_index": chunk_index,
-            "source": "unknown"}
+            "source": source}
         
         res.append(chunk)
         
@@ -71,7 +72,7 @@ def chunker(text: str, chunk_size: int, overlap_size: int) -> list[dict]:
         chunk = {
             "text": str(text[(r - overlap): len(text)]),
             "chunk_index": chunk_index,
-            "source": "unknown"
+            "source": source
         }
 
         res.append(chunk)
@@ -85,8 +86,6 @@ if __name__ == "__main__":
     clean = clean_text(data)
     chunks = chunker(clean, chunk_size = 512, overlap_size = 50)
     print(f"Total chunks: {len(chunks)}")
-    print(chunks[0])
-    print(chunks[1])
+    print(chunks[0]["chunk_index"])
+    print(chunks[1]["chunk_index"])
     assert chunks[1]["text"][:50*4] == chunks[0]["text"][-50*4:]
-    
-    
