@@ -6,6 +6,4 @@ The corpus for this project is **The Prevention of Cruelty to Animals Act, 1960 
 
 - Animals are not just property, they are family and sentient beings deserving of the same (or more, nothing less) love and respect we afford our fellow humans.
 
-> *"Until one has loved an animal, a part of one's soul remains unawakened."* — **Anatole France**
-
 The documents contain sections like definitions, penalties, offences, exemptions which makes it suitable for writing ground truth questions on animal welfare.
