@@ -1,4 +1,6 @@
 from pathlib import Path
+import pdfplumber
+import re
 
 def load_document(pdf_path: Path) -> str:
     """
@@ -7,7 +9,13 @@ def load_document(pdf_path: Path) -> str:
     Args:
         pdf_path: Relative path to the pdf file.
     """
-    pass
+    content = ""
+    with pdfplumber.open(pdf_path) as pdf:
+        for page in pdf.pages:
+            extracted = page.extract_text()
+            content = content + extracted if extracted else ""
+
+    return content if content else ""
 
 def clean_text(text: str) -> str:
     """
@@ -16,7 +24,11 @@ def clean_text(text: str) -> str:
     Args:
         text: corpus 
     """
-    pass
+    
+    text = text.replace("_","")
+    text = re.sub(r' +',' ', text)
+
+    return text
 
 def chunk_text(text: str, chunk_size: int, overlap: int) -> list[dict]:
     """
@@ -30,3 +42,10 @@ def chunk_text(text: str, chunk_size: int, overlap: int) -> list[dict]:
     pass
 
 
+if __name__ == "__main__":
+    data = load_document(r"data\raw\the_prevention_of_cruelty_to_animals_act_1960.pdf")
+    print("before")
+    print(data[:500])
+    clean = clean_text(data)
+    print("after")
+    print(clean[:500])
