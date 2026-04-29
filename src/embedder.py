@@ -20,6 +20,18 @@ def chunk_embedder(chunks: list[dict]) -> np.ndarray:
     
     return embeddings.astype(np.float32)
 
+def query_embedder(query: str) -> np.ndarray:
+    """
+    query_embedder handles embedding for a single query.
+
+    Args:
+        query: The query string
+    """
+    query_embed = MODEL.encode(query)
+    query_embed = np.expand_dims(query_embed, axis = 0)
+    return query_embed.astype(np.float32)
+
+
 
 def index_builder(embeddings: np.ndarray) -> faiss.IndexFlatL2:
     """
