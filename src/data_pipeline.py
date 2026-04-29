@@ -1,6 +1,7 @@
 from pathlib import Path
 import pdfplumber
 import re
+import json
 
 def load_document(pdf_path: Path) -> str:
     """
@@ -78,6 +79,30 @@ def chunker(text: str, chunk_size: int, overlap_size: int, source:str = "unknown
         res.append(chunk)
     
     return res
+    
+def chunks_saver(chunks: list[dict], path: str) -> None:
+    """
+    chunks_saver as the name suggests saves the chunks in specified location.
+    This prevents us from chunking everytime we need to query.
+
+    Args:
+        chunks: chunks of the corpus
+        path: the specified location to save the chunks
+    """
+    with open(f"{path}","w") as f:
+        f.write(json.dumps(chunks))
+
+def chunks_loader(path: str) -> list[dict]:
+    """
+    chunks_loader helps us retrieve the stored chunks for querying.
+
+    Args:
+        path: the persistant location of chunks
+    """
+    with open(f"{path}","r") as f:
+        fetched_chunks = json.load(f)
+
+    return fetched_chunks
 
 def corpus_builder(data_dir: Path, chunk_size: int, overlap_size: int) -> list[dict]:
 
@@ -92,11 +117,10 @@ def corpus_builder(data_dir: Path, chunk_size: int, overlap_size: int) -> list[d
     return res
 
 
-
-
-
 if __name__ == "__main__":
-    corpus = corpus_builder(Path("data/raw"), chunk_size=512, overlap_size=50)
-    print(f"Total chunks across all documents: {len(corpus)}")
-    print(corpus[0]["source"])
-    print(corpus[-1]["source"])
+    chunks = corpus_builder(Path("data/raw"), chunk_size=512, overlap_size=50)
+    chunks_saver(chunks, Path("data/chunks.json"))
+    loaded_chunks = chunks_loader(path = Path("data/chunks.json"))
+    assert chunks == loaded_chunks
+    print("chunk save and load verified")
+    
