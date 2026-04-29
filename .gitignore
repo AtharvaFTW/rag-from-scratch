@@ -220,6 +220,7 @@ $RECYCLE.BIN/
 # local only
 
 # in .gitignore
+
 data/index.faiss
 data/raw/
 __pycache__/
