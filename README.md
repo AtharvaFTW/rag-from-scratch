@@ -24,7 +24,7 @@ Python · FAISS · SentenceTransformers · Llama 3.1 8b via Ollama · RAGAS · F
 - [x] Phase 3 - Embedding + Indexing
 - [x] Phase 4 - Retrieval Layer
 - [x] Phase 5 - Generation
-- [ ] Phase 6 - Evaluation Set <-- _Currently here_
+- [ ] Phase 6 - Evaluation Set  &larr;  _Currently here_
 - [ ] Phase 7 - RAGAS Evaluation
 - [ ] Phase 8 - A/B Testing
 - [ ] Phase 9 - FastAPI + Streamlit
