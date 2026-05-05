@@ -2,6 +2,9 @@ import faiss
 from src.embedder import query_embedder
 import numpy as np
 from rank_bm25 import BM25Okapi
+from sentence_transformers import CrossEncoder
+
+CE_MODEL = CrossEncoder("cross-encoder/ms-marco-MiniLM-L-6-v2")
 
 def dense_retriever(query:str, index:faiss.IndexFlatL2, chunks:list[dict], top_k:int = 20) -> list[dict]:
     """
@@ -121,7 +124,37 @@ def hybrid_retriever(query:str, index:faiss.IndexFlatL2, chunks:list[dict], top_
 
 
 def reranker(query:str, candidates:list[dict], top_k:int = 5) -> list[dict]:
-    pass
+    """
+    The reranker uses the cross encoder which passes the list[(query + chunk)] for all the available chunks.
+    This enables the model to do full attention between query word and every chunk word unlike the bi-encoders where
+    the query and chunks are encoded seperately.
+
+    Args:
+        query : The query string
+        candidates : The top chunks retrieved chunks from the hybrid (dense + bm25) retriever.
+        top_k : Number of most relevant chunks to retrieve
+
+    """
+    tups = [(query, c["text"]) for c in candidates]
+
+    scores = CE_MODEL.predict(tups)
+    top_scores = np.argsort(scores)[::-1][:top_k]
+    
+    res = []
+
+    for idx in top_scores:
+        target_chunk = candidates[idx]
+        
+        chunk = {
+            "chunk_index" : target_chunk["chunk_index"],
+            "text" : target_chunk["text"],
+            "source" : target_chunk["source"],
+            "score" : scores[idx]
+        }
+
+        res.append(chunk)
+
+    return res 
 
 
 if __name__ == "__main__":
@@ -131,9 +164,17 @@ if __name__ == "__main__":
 
     chunks = chunks_loader(Path("data/chunks.json"))
     loaded_index = faiss.read_index("data/index.faiss")
-    results = hybrid_retriever(query = "penelties for animal cruelty", index = loaded_index, chunks = chunks, top_k = 5)
+    hybrid_results = hybrid_retriever(query = "penelties for animal cruelty", index = loaded_index, chunks = chunks, top_k = 5)
 
-    assert len(results) == 5
-    assert all("text" in r and "source" in r and "score" in r for r in results)
-    for r in results:
-        print(r["score"], r["source"], r["text"][:80])
+    reranked_results = reranker("penalities for animal cruelty", hybrid_results, top_k = 5)
+
+    assert len(reranked_results) == 5
+    assert all("text" in r and "source" in r and "score" in r for r in reranked_results)
+    print(f"#########################################")
+    for r in reranked_results:
+        print(f"Score : {r["score"]:.2f}")
+        print ("--")
+        print(f"Text : {r["text"][:200]}")
+        print ("--")
+        print(f"Source : {r["source"]}")
+        print(f"#########################################")

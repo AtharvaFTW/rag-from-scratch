@@ -28,7 +28,7 @@ def query_embedder(query: str) -> np.ndarray:
         query: The query string
     """
     query_embed = MODEL.encode(query)
-    query_embed = np.expand_dims(query_embed, axis = 0)
+    query_embed = np.expand_dims(query_embed, axis = 0) # faiss expects in (1,384)
     return query_embed.astype(np.float32)
 
 
