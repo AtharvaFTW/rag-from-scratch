@@ -220,6 +220,7 @@ $RECYCLE.BIN/
 # local only
 
 # in .gitignore
+local_only/
 data/
 data/index.faiss
 data/raw/

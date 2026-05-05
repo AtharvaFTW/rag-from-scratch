@@ -20,6 +20,7 @@ def chunk_embedder(chunks: list[dict]) -> np.ndarray:
     
     return embeddings.astype(np.float32)
 
+
 def query_embedder(query: str) -> np.ndarray:
     """
     query_embedder handles embedding for a single query.
