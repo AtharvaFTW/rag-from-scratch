@@ -5,7 +5,6 @@ import os
 load_dotenv()
 
 HOST = os.environ.get("OLLAMA_NGROK_TUNNEL")
-
 client = Client(host = HOST,  headers={'ngrok-skip-browser-warning': 'true'})
 
 
@@ -21,13 +20,15 @@ def generate(query: str, chunks: list[dict]) -> str :
     context = [f"Text - {chunk['text']},Source - {chunk['source']}" for chunk in chunks]
     context_str = "\n\n".join(context)
 
+    context_for_ragas = [chunk["text"] for chunk in chunks]
+
     filled_prompt = prompt.format(query = query, context = context_str)
 
     response = client.chat(model = "llama3.1:8b" , messages = [{
         'role': 'user', 'content': f'{filled_prompt}'
     }])
 
-    return response['message']['content']
+    return response['message']['content'], context_for_ragas
 
 if __name__ == "__main__":
     from src.embedder import index_loader
@@ -43,5 +44,5 @@ if __name__ == "__main__":
     print(f"Question: {query}")
     retrieved = hybrid_retriever(query, index, chunks, top_k = 20)
     reranked = reranker(query, retrieved, top_k = 5)
-    answer = generate(query, reranked)
+    answer, _ = generate(query, reranked)
     print(f"Response: {answer}")
