@@ -1,0 +1,152 @@
+[
+    {
+        "question": "In which states is the 'The Prevention of cruelty to animals' act effective? ",
+        "ground_truth": "The Act remains effective accross India according to the under Chapter 1, Preliminary of 'The Prevention Of Cruelty To Animals Act, 1960'. ",
+        "relevant_chunk_ids": []
+    },
+    {
+        "question": "What is the terms used for the process of drawing more milk from the milch animals?",
+        "ground_truth": "Terms like 'phooka' or 'doom dev' are used as described in Chapter 1, Preliminary of 'The Prevention Of Cruelty To Animals Act, 1960'.",
+        "relevant_chunk_ids": []
+    },
+    {
+        "question": "Are bullock cart races permitted in Maharashtra?",
+        "ground_truth": "The races maybe conducted with prior permission of the Collector, under the condition that no pain or suffering is caused to the animal by any person or the person in charge of the animal and other conditions prescribed under section 38B of the State Government as mentioned in the Maharashtra State Amendment Section 3 ",
+        "relevant_chunk_ids": []
+    },
+    {
+        "question": "What is the punishment for contraventing the rules of the bullock cart races?",
+        "ground_truth": "For breaking the law, or causing pain or suffering to the animals the culprit shall be punished with fine upto 5 lakh rupees or imprisonment upto 3 years as described in the State Amendment of Maharashtra in 'The Prevention Of Cruelty To Animals Act 1960'.",
+        "relevant_chunk_ids": []
+    },
+    {
+        "question": "What is the penality for first-time offence of animal cruelty under the Preservation of Cruelty to Animals Act, 1960?",
+        "ground_truth": "For a first-time offence , the penalty is a fine not less than ten rupees and not exceeding fifty rupees under Section 11 of Prevention Of Cruelty to Animals Act 1960. ",
+        "relevant_chunk_ids": []
+    },
+    {
+        "question": "What is the penality for second or subsequent offence committed within 3 years of previous offence accoriding to the Preservation of Cruelty to Animals Act, 1960?",
+        "ground_truth": "For subsequent offence , the penality is a fine more than twenty five rupees not exceeding one hundred rupees or imprisonment for a period of three months or both.",
+        "relevant_chunk_ids": []
+    },
+    {
+        "question": "What are the punishments for admission of substance with sole purpose of increasing the lactations of milch animals?",
+        "ground_truth": "The practice of phooka or doom dev are punishable with fine upto one thousand rupees or imprisonment for a term of two years or both with the forfeiture of victim animal to the Government as per the State Amendement Maharashtra Section 11 in 'The Prevention Of Cruelty To Animals Act 1960'. ",
+        "relevant_chunk_ids": []
+    },
+    {
+        "question": "How is the inspection carried out during the experiements of animals?",
+        "ground_truth": "The committee authorise any of the officers or any person to inspect the location of the experiment procedure. The authorized person may enter at any time considered reasonable by him and inpect any institution or place in where the experiements are carried on and require any person to produce any record kept by him with respect to experiment on animals as stated in the Section 18 of 'The prevention of curelty to animals act 1960'.",
+        "relevant_chunk_ids": []
+    },
+    {
+        "question": "What are the consequences it the committee is unsatisfied with the inpection report of the animal experiment?",
+        "ground_truth": "In such cases the committee gives the person an opportunity to the person or the institution of being heard in the matter and by order imply prohibition ofn the person or institution from carrying any such experiments either for a specified period or indefinitely or may allow only in special conditions considered by the committee, according to the Section 19 of 'The prevention of curelty to animals act 1960'.",
+        "relevant_chunk_ids": []
+    },
+    {
+        "question": "List the punishments imposed for the contravention of orders of Section 19",
+        "ground_truth": "1. Fine upto two hundred rupees , 2. When the contravention or breach of condition has taken place in any institution, the person in charge of the institution shall be deemed to be guilty of the offence and shall be punishable accordingly as mentioned in Section 20 of 'The prevention of curelty to animals act 1960'",
+        "relevant_chunk_ids": []
+    },
+    {
+        "question": "What are happens if the a non registered person exhibits or trains any performing animal?",
+        "ground_truth": "The person is punishable on conviction with fine upto five hundred rupees or with imprissonment of 3 months or with both as per the Section 26 of 'The prevention of curelty to animals act 1960'",
+        "relevant_chunk_ids": []
+    },
+    {
+        "question": "What is a Bailgada Sharyat?",
+        "ground_truth": "A Bailgada Sharyat also known as 'bullock cart race' is an event involving bulls or bullocks to conduct a race tied to a cart using wooden yoke with or without a cartman. This event is seen as part of tradition according to Section 2 State Amendment for Maharastra of 'The prevention of curelty to animals act 1960'",
+        "relevant_chunk_ids": []
+    },
+    {
+        "question": "Who appoints one or many people to represent the Indian Board for WildLife?",
+        "ground_truth": "The Central Government holds the authority to appoint one person to represent the Indian Board for WildLife as per Section 5 of 'The prevention of curelty to animals act 1960' ",
+        "relevant_chunk_ids": []
+    },
+    {
+        "question": "Is animal shooting prohitibed?",
+        "ground_truth": "Yes, it is considered and offense if one promotes or take parts in any shooting match or competition wehrein animals are released from captivity for the purpose of shooting as per Section 11 of 'The prevention of curelty to animals act 1960'. ",
+        "relevant_chunk_ids": []
+    },
+    {
+        "question": "Can police search the area with a search warrant?",
+        "ground_truth": "Yes,  If a magistrate of the first or second class or a presidency magistrate or a sub-divisional magistrate or a commissioner of police or district superintendent of police, upon information in writing, and after such inquiry as he thinks necessary, has reason to believe that an offence under this Act is being, or is about to be, or has been committed in any place, he may either himself enter and search or by his warrant authorise any police officer not below the rank of sub-inspector to enter and search the place as stated in Section 33 of 'The prevention of curelty to animals act 1960'.",
+        "relevant_chunk_ids": []
+    },
+    {
+        "question": "What does Schedule I of the WildLife Protection Act, 1972 signify?",
+        "ground_truth": "Schedule I lists animals afforded the highest degree of protection under the Wildlife Protection Act, 1972. Offences against Schedule I animals carry mandatory imprisonment between 3 to 7 years and a minimum fine of ten thousand rupees.",
+        "relevant_chunk_ids": []
+    },
+    {
+        "question": "Which wild animals are permitted for hunting?",
+        "ground_truth": "Hunting wild animals is completely prohitibed and considered as offence except for special cases like self defence or grant of permit for special purposes like education, scientific research , scientific management as mentioned in Clause 9 of The Wildlife Protection Act 1972",
+        "relevant_chunk_ids": []
+    },
+    {
+        "question": "Can I take a wildplant home with me?",
+        "ground_truth": "The Wildlife protection act 1972 mentions the prohibition of picking,uprooting of specified plants",
+        "relevant_chunk_ids": []
+    },
+    {
+        "question": "Is cultivation of specified plants allowed?",
+        "ground_truth": "The Wildlife protection act 1972 states that no person shall cultivate a specifed plant except under, and in accordance with a licence granted by Chief Wild Life Warden or any other officier authorised by the State Government.",
+        "relevant_chunk_ids": []
+    },
+    {
+        "question": "Can one start a business of specified plants without a licence?",
+        "ground_truth": "No, that is considered as an offence and however people who were dealing with the plants before the commencement of act can continue to do so upto 60 days or where he has made an application withing that period for grant of licence, until the licence is granted to him or denied as per The Wildlife Protection Act.",
+        "relevant_chunk_ids": []
+    },
+    {
+        "question": "Is it okay to carry a weapon into sanctuary for personal safety?",
+        "ground_truth": "No, this not allowed unless you have permission in writting from the the chief wildlife wardern or authorised officer as per The Wildlife Protection Act",
+        "relevant_chunk_ids": []
+    },
+    {
+        "question": "What is the punishment for hunting a wild animal listed in Schedule I of the Wildlife Protection Act, 1972?",
+        "ground_truth": "Hunting a Schedule I animal is punishable with imprisonment for a term not less than 3 years which may extend to 7 years and a minimum fine of ten thousand rupees as per Section 51 of the Wildlife Protection Act, 1972.",
+        "relevant_chunk_ids": []
+    },
+    {
+        "question": "Who has the authority to declare a wildlife sanctuary under the Wildlife Protection Act, 1972?",
+        "ground_truth": "The State Government has the authority to declare any area as a wildlife sanctuary by notification in the Official Gazette as per the Wildlife Protection Act, 1972.",
+        "relevant_chunk_ids": []
+    },
+    {
+        "question": "What is a Tiger Reserve under the Wildlife Protection Act, 1972?",
+        "ground_truth": "A Tiger Reserve is an area notified by the State Government on recommendation of the National Tiger Conservation Authority for the purpose of tiger conservation under the Wildlife Protection Act, 1972.",
+        "relevant_chunk_ids": []
+    },
+    {
+        "question": "Can a person trade in animal articles without a licence under the Wildlife Protection Act, 1972?",
+        "ground_truth": "No, no person shall carry on business as a manufacturer of, or dealer in, any animal article without a licence granted under the Wildlife Protection Act, 1972.",
+        "relevant_chunk_ids": []
+    },
+    {
+        "question": "What is the composition of the National Board for Wildlife?",
+        "ground_truth": "The National Board for Wildlife is chaired by the Prime Minister of India and includes the Minister in charge of Forests and Wildlife as Vice-Chairperson along with other members as specified under the Wildlife Protection Act, 1972.",
+        "relevant_chunk_ids": []
+    },
+    {
+        "question": "What powers does a wildlife warden have to arrest an offender?",
+        "ground_truth": "A wildlife warden or any forest officer or police officer has the power to arrest without warrant any person who has committed an offence against the Wildlife Protection Act, 1972 and detain that person.",
+        "relevant_chunk_ids": []
+    },
+    {
+        "question": "Are captive animals covered under the Wildlife Protection Act, 1972?",
+        "ground_truth": "Yes, the Wildlife Protection Act, 1972 covers captive animals and no person shall acquire, receive, keep in captivity, sell or transfer any captive animal specified in Schedule I without prior permission.",
+        "relevant_chunk_ids": []
+    },
+    {
+        "question": "What is the validity period of a licence to deal in animal articles under the Wildlife Protection Act, 1972?",
+        "ground_truth": "A licence granted to deal in animal articles remains valid for a period of one year from the date of grant unless suspended or cancelled under the Wildlife Protection Act, 1972.",
+        "relevant_chunk_ids": []
+    },
+    {
+        "question": "What happens to a vehicle or weapon used in illegal hunting under the Wildlife Protection Act, 1972?",
+        "ground_truth": "Any vehicle, vessel, weapon, trap or tool used in the commission of an offence under the Wildlife Protection Act, 1972 shall be liable to confiscation by the court.",
+        "relevant_chunk_ids": []
+    }
+]
