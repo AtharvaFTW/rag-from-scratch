@@ -5,6 +5,7 @@ import os
 load_dotenv()
 
 HOST = os.environ.get("OLLAMA_NGROK_TUNNEL")
+MODEL = os.environ.get("GEN_LLM")
 client = Client(host = HOST,  headers={'ngrok-skip-browser-warning': 'true'})
 
 
@@ -24,7 +25,7 @@ def generate(query: str, chunks: list[dict]) -> str :
 
     filled_prompt = prompt.format(query = query, context = context_str)
 
-    response = client.chat(model = "llama3.1:8b" , messages = [{
+    response = client.chat(model = MODEL , messages = [{
         'role': 'user', 'content': f'{filled_prompt}'
     }])
 
