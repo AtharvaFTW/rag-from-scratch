@@ -70,7 +70,7 @@ Local inference via Ollama on Google Colab T4 GPU tunneled through ngrok proved 
 | Config | Faithfulness | Answer Relevancy | Context Precision | Context Recall |
 |--------|-------------|-----------------|-------------------|----------------|
 | 512 chunks, hybrid, reranked (baseline) | 0.6345 | 0.4292 | 0.4588 | 0.4667 |
-| 256 chunks, hybrid, reranked | - | - | - | - |
+| 256 chunks, hybrid, reranked | 0.8753 | 0.3574 | 0.3621 | 0.3833 |
 | 1024 chunks, hybrid, reranked | - | - | - | - |
 | 512 chunks, dense only | - | - | - | - |
 | 512 chunks, sparse only | - | - | - | - |

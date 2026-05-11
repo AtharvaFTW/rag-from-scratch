@@ -74,11 +74,20 @@ def index_loader(path: Path) -> faiss.IndexFlatL2:
 
 
 if __name__ == "__main__":
-    from src.data_pipeline import corpus_builder
+    from src.data_pipeline import corpus_builder, chunks_saver
     from pathlib import Path
+    import argparse
 
-    chunks = corpus_builder(Path("data/raw"), chunk_size = 512, overlap_size = 50)
+    parser = argparse.ArgumentParser()
+    parser.add_argument("--chunks", type = int, default = 512, help = "This sets the size of the chunks")
+    parser.add_argument("--overlap", type = int, default = 50, help = "This sets the size of the overlap between chunks")
+
+    args = parser.parse_args()
+    chunks = corpus_builder(Path("data/raw"), chunk_size=args.chunks, overlap_size=args.overlap)
+    chunks_saver(chunks, Path("data/chunks.json"))
+    
     embeddings = chunk_embedder(chunks)
+
     print(f"Embeddings shape: {embeddings.shape}")
     print(f"Dtype : {embeddings.dtype}")
 
