@@ -23,6 +23,10 @@ tqdm.__init__ = partialmethod(tqdm.__init__, disable = True)
 
 load_dotenv()
 
+
+console = Console()
+SPINNER_COLOUR = "#D97757"
+
 OLLAMA_API_KEY = os.environ.get("OLLAMA_API_KEY")
 BASE_URL = os.environ.get("OLLAMA_CLOUD_URL")
 EVAL_LLM = os.environ.get("EVAL_LLM")
@@ -37,26 +41,25 @@ def eval_dataset_builder(eval_path: Path, chunks_path: Path, index_path: Path) -
 
     res = []
     
-    for es in eval_set:
-        query = es["question"]
-        hybrid_results = hybrid_retriever(query, loaded_index, chunks, 10)
-        reranked_results = reranker(query, hybrid_results, 5)
-        answer, context = generate(query ,reranked_results)
+    for i in range(len(eval_set)):
+        with console.status(f"[{SPINNER_COLOUR}] Generating Dataset... ({((i+1)/len(eval_set))*100:.2f}%)", spinner ="star",speed = 0.5, spinner_style = SPINNER_COLOUR):
+            query = eval_set[i]["question"]
+            hybrid_results = hybrid_retriever(query, loaded_index, chunks, 10)
+            reranked_results = reranker(query, hybrid_results, 5)
+            answer, context = generate(query ,reranked_results)
 
-        dic = {
-            "question" : query,
-            "answer" : answer,
-            "contexts" : context,
-            "ground_truth" : es["ground_truth"]
-        }
+            dic = {
+                "question" : query,
+                "answer" : answer,
+                "contexts" : context,
+                "ground_truth" : eval_set[i]["ground_truth"]
+            }
 
-        res.append(dic)
+            res.append(dic)
+    console.print(f"[bold green] Dataset Generated Successfully")
     return res
 
 def run_ragas(eval_data: list[dict]) -> dict:
-
-    console = Console()
-    SPINNER_COLOUR = "#D97757"
 
     llm  = LangchainLLMWrapper(ChatOllama( model = EVAL_LLM, 
                                             base_url = BASE_URL, 
@@ -70,7 +73,7 @@ def run_ragas(eval_data: list[dict]) -> dict:
     metrics = [faithfulness, answer_relevancy, context_precision, context_recall]
 
     run_config = RunConfig(
-        timeout = 300,
+        timeout = 600,
         max_retries = 3,
         max_wait = 60,
         max_workers = 1
@@ -79,7 +82,7 @@ def run_ragas(eval_data: list[dict]) -> dict:
     res = []
 
     for i, sample in enumerate(eval_data):
-        with console.status(f"[{SPINNER_COLOUR}] Evaluating sample {i+1}/{len(eval_data)}", spinner ="star", spinner_style = SPINNER_COLOUR):
+        with console.status(f"[{SPINNER_COLOUR}] Evaluating ... ({((i+1)/len(eval_data))*100:.2f}%)", spinner ="star",speed = 0.5, spinner_style = SPINNER_COLOUR):
         
             dataset = Dataset.from_list([sample])
             result = evaluate(dataset, metrics = metrics, embeddings = embeddings,llm = llm, run_config = run_config, raise_exceptions = False, show_progress = False)
