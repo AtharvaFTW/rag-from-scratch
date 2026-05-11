@@ -6,19 +6,27 @@ from src.generator import generate
 from ragas import evaluate, RunConfig
 from ragas.metrics import faithfulness, answer_relevancy, context_precision, context_recall
 from ragas.llms import LangchainLLMWrapper
-from ragas.embeddings import GoogleEmbeddings, LangchainEmbeddingsWrapper
-from langchain_google_genai import ChatGoogleGenerativeAI
+from ragas.embeddings import LangchainEmbeddingsWrapper
+from langchain_ollama import ChatOllama
+from langchain_huggingface import HuggingFaceEmbeddings
 from datasets import Dataset
 from dotenv import load_dotenv
-import faiss
+from rich.console import Console
+from tqdm import tqdm
+from functools import partialmethod
+import pandas
 import json
 import os
+import time
 
+tqdm.__init__ = partialmethod(tqdm.__init__, disable = True)
 
 load_dotenv()
 
-GOOGLE_API_KEY = os.environ.get("GOOGLE_API_KEY")
+OLLAMA_API_KEY = os.environ.get("OLLAMA_API_KEY")
+BASE_URL = os.environ.get("OLLAMA_CLOUD_URL")
 EVAL_LLM = os.environ.get("EVAL_LLM")
+EMBED_MODEL = os.environ.get("EMBED_MODEL")
 
 def eval_dataset_builder(eval_path: Path, chunks_path: Path, index_path: Path) -> list[dict]:
     with open(eval_path,"r") as f:
@@ -47,35 +55,39 @@ def eval_dataset_builder(eval_path: Path, chunks_path: Path, index_path: Path) -
 
 def run_ragas(eval_data: list[dict]) -> dict:
 
-    llm  = LangchainLLMWrapper(ChatGoogleGenerativeAI(
-        model = EVAL_LLM,
-        google_api_key = GOOGLE_API_KEY,
-        temperature = 0.3,
+    console = Console()
+    SPINNER_COLOUR = "#D97757"
+
+    llm  = LangchainLLMWrapper(ChatOllama( model = EVAL_LLM, 
+                                            base_url = BASE_URL, 
+                                            temperature = 0,
+                                            format = "json",
+                                            client_kwargs = {"headers" : {"Authorization": "Bearer " + OLLAMA_API_KEY}}
     ))
 
-    embeddings =GoogleEmbeddings(model = "gemini-embeddings-2-preview",
-                                task_type = "retrieval_document")
-                                            
+    embeddings = LangchainEmbeddingsWrapper(HuggingFaceEmbeddings(model_name = EMBED_MODEL))
 
-    
-    eval_dataset = Dataset.from_list(eval_data)
-
-    metrics = [faithfulness, answer_relevancy, context_precision, context_recall ]
+    metrics = [faithfulness, answer_relevancy, context_precision, context_recall]
 
     run_config = RunConfig(
-        timeout = 120,
+        timeout = 300,
         max_retries = 3,
         max_wait = 60,
-        max_workers = 2
+        max_workers = 1
     )
     
-    return evaluate(eval_dataset,
-                    metrics = metrics,
-                    llm = llm,
-                    embeddings = embeddings,
-                    run_config = run_config,
-                    raise_exceptions = False)
+    res = []
 
+    for i, sample in enumerate(eval_data):
+        with console.status(f"[{SPINNER_COLOUR}] Evaluating sample {i+1}/{len(eval_data)}", spinner ="star", spinner_style = SPINNER_COLOUR):
+        
+            dataset = Dataset.from_list([sample])
+            result = evaluate(dataset, metrics = metrics, embeddings = embeddings,llm = llm, run_config = run_config, raise_exceptions = False, show_progress = False)
+            res.append(result)
+            time.sleep(10)
+
+    console.print(f"[bold green] Evaluation Completed Successfully")
+    return res
 
 if __name__ == "__main__":
     import torch
@@ -95,4 +107,6 @@ if __name__ == "__main__":
         dataset = json.load(f)
 
     ragas = run_ragas(dataset)
+    with open("evaluation/results.json", "w" ,encoding = "utf-8") as f:
+        json.dump([r.to_pandas().to_dict() for r in ragas], f, indent = 4)
     print(ragas)
