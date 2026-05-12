@@ -27,9 +27,10 @@ Python · FAISS · SentenceTransformers · Llama 3.1 8b via Ollama(generation) �
 - [x] Phase 6 - Evaluation Set  
 - [x] Phase 7 - RAGAS Evaluation
 - [x] Phase 8 - A/B Testing
-- [ ] Phase 9 - FastAPI + Streamlit &larr;  _Currently here_
-- [ ] Phase 10 - Pytest
-- [ ] Phase 11 - Docker
+- [x] Phase 9 - FastAPI 
+- [ ] Phase 10 - Streamlit &larr;  _Currently here_
+- [ ] Phase 11 - Pytest
+- [ ] Phase 12 - Docker
 
 ## Architecture
 
@@ -74,6 +75,9 @@ Reranking had a significant impact, removing it dropped context precision from 0
 - Answer Relevancy was highest with larger chunks (1024 tokens: 0.57) proving context is directly proportional to completeness.
 
 To achieve the best of both worlds we set the chunk size to 512.
+
+**Known Limitation**: The system occasionally retrieves contextually adjacent but semantically misaligned chunks.
+- Example: Queries about stray animals surface ownership/custody clauses due to keyword overlap in Sections. This is the limitation of current 512-token character-based chunking strategy. Sentence-aware splitting is noted as future improvement.
 
 ## Evaluation Results
 
