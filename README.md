@@ -70,10 +70,10 @@ Reranking had a significant impact, removing it dropped context precision from 0
 
 ### Generator Quality
 
-Faithfulness peaked with smaller chunks (256 tokens: 0.88) signaling focused context reduces hallucination.
-Answer Relevancy was highest with larger chunks (1024 tokens: 0.57) proving context is directly proportional to completeness.
+- Faithfulness peaked with smaller chunks (256 tokens: 0.88) signaling focused context reduces hallucination.
+- Answer Relevancy was highest with larger chunks (1024 tokens: 0.57) proving context is directly proportional to completeness.
 
-To achieve the best of both worlds we set the chunk size to 512
+To achieve the best of both worlds we set the chunk size to 512.
 
 ## Evaluation Results
 
