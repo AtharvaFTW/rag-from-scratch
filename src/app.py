@@ -19,12 +19,17 @@ if st.session_state.data:
     st.text(f"Answer: {data["response"]}")
     
     if st.button("Show References"):
-        for ref in data["references"]:
-            st.info(ref)
+        for i, ref in enumerate(data["references"]):
+            with st.expander(f"Reference {i+1}"):
+                st.info(ref)
 
     if st.button("Show Ragas"):
-        st.write(f"Average RAGAS score for current config: {data["ragas_scores"]}")
-
+        scores = data["ragas_scores"]
+        st.metric("Faithfulness", scores["faithfulness"])
+        st.metric("Answer Relevancy", scores["answer_relevancy"])
+        st.metric("Context Precision", scores["context_precision"])
+        st.metric("Context Recall", scores["context_recall"])
+        st.caption(f"Config: {scores['config']}")
 
 
     
