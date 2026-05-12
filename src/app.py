@@ -1,8 +1,9 @@
 import streamlit as st
 import requests
+import os
 
 
-API_URL = "http://localhost:8000"
+API_URL = os.environ.get("API_URL", "http://localhost:8000")
 
 st.title("🐾 Animal Welfare Legal Assistant")
 
