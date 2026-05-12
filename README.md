@@ -26,16 +26,16 @@ Python · FAISS · SentenceTransformers · Llama 3.1 8b via Ollama(generation) �
 - [x] Phase 5 - Generation
 - [x] Phase 6 - Evaluation Set  
 - [x] Phase 7 - RAGAS Evaluation
-- [ ] Phase 8 - A/B Testing &larr;  _Currently here_
-- [ ] Phase 9 - FastAPI + Streamlit
-- [ ] Phase 10 - Docker
+- [x] Phase 8 - A/B Testing
+- [ ] Phase 9 - FastAPI + Streamlit &larr;  _Currently here_
+- [ ] Phase 10 - Pytest
+- [ ] Phase 11 - Docker
 
 ## Architecture
 
 _To be added after the Phase 9 completion_
 
 ## Key Findings
-
 
 ### Phase 8 Hypotheses (pre-evaluation predictions)
 
@@ -52,16 +52,28 @@ Local inference via Ollama on Google Colab T4 GPU tunneled through ngrok proved 
 - T4 GPU throughput was too slow (~230s/job) causing systematic timeouts
 - Small models (`Qwen3` 4B, 8B) failed to follow RAGAS's structured JSON output format, producing plain text answers instead of parseable evaluation scores
 
-**Solution**: Ollama Cloud API with `gemma4:31b-cloud` resolved both the issues. Pros like strong instruction following, no GPU setup required, generous free tier(~5M tokens/week). Total evaluation cost: 5.6% of weekly quota for 30 questions accross 4 metrics (Faithfulness, Answer Relevancy, Context Precision, Context Recall)
+**Solution**: Ollama Cloud API with `gemma4:31b-cloud` resolved both the issues. Pros like strong instruction following, no GPU setup required, generous free tier(~5M tokens/week). Total evaluation cost: 5.6% of weekly quota for 30 questions across 4 metrics (Faithfulness, Answer Relevancy, Context Precision, Context Recall)
 
 
 ### Retrieval Quality
-*To be updated after A/B testing completes*
+
+Dense Retrieval outperformed both sparse and hybrid on this corpus.
+
+Evaluation Metrics:
+- Context Precision: 0.66
+- Context Recall: 0.72 
+
+Metrics were hightest with dense retrieval + reranking. Hybrid (RRF fusion) underperformed expectations, the combination of dense and BM25 scores hurt further rather than help narrowing the legal domain.
+
+Reranking had a significant impact, removing it dropped context precision from 0.46 -> 0.28, confirming the cross-encoder adds meaningful signal.
 
 
 ### Generator Quality
-*To be updated after A/B testing completes*
 
+Faithfulness peaked with smaller chunks (256 tokens: 0.88) signaling focused context reduces hallucination.
+Answer Relevancy was highest with larger chunks (1024 tokens: 0.57) proving context is directly proportional to completeness.
+
+To achieve the best of both worlds we set the chunk size to 512
 
 ## Evaluation Results
 
@@ -72,8 +84,8 @@ Local inference via Ollama on Google Colab T4 GPU tunneled through ngrok proved 
 | 512 chunks, hybrid, reranked (baseline) | 0.6345 | 0.4292 | 0.4588 | 0.4667 |
 | 256 chunks, hybrid, reranked | 0.8753 | 0.3574 | 0.3621 | 0.3833 |
 | 1024 chunks, hybrid, reranked | 0.4568 | 0.5733 | 0.3361 | 0.4000 |
-| **512 chunks, dense only 🏆** | **0.8489** | **0.5397** | **0.6575** | **0.7167** |
-| 512 chunks, sparse only | 0.8201 | 0.6307 | 0.6631 | 0.6167 |
+| **512 chunks, dense only, reranked 🏆** | **0.8489** | **0.5397** | **0.6575** | **0.7167** |
+| 512 chunks, sparse only, reranked | 0.8201 | 0.6307 | 0.6631 | 0.6167 |
 | 512 chunks, hybrid, no reranking | 0.4160 | 0.4492 | 0.2810 | 0.5000 |
 
 
@@ -84,4 +96,4 @@ _To be added after the Phase 10 completion_
 
 
 
-**Updated on** - 11 May 2026
+**Updated on** - 12 May 2026
