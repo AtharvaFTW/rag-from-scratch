@@ -4,7 +4,7 @@ import numpy as np
 from rank_bm25 import BM25Okapi
 from sentence_transformers import CrossEncoder
 
-CE_MODEL = CrossEncoder("cross-encoder/ms-marco-MiniLM-L-6-v2")
+CE_MODEL = None
 
 def dense_retriever(query:str, index:faiss.IndexFlatL2, chunks:list[dict], top_k:int = 20) -> list[dict]:
     """
@@ -135,6 +135,9 @@ def reranker(query:str, candidates:list[dict], top_k:int = 5) -> list[dict]:
         top_k : Number of most relevant chunks to retrieve
 
     """
+    global CE_MODEL 
+    if CE_MODEL is None:
+        CE_MODEL = CrossEncoder("cross-encoder/ms-marco-MiniLM-L-6-v2")
     tups = [(query, c["text"]) for c in candidates]
 
     scores = CE_MODEL.predict(tups)
@@ -163,7 +166,7 @@ if __name__ == "__main__":
     from pathlib import Path
 
     chunks = chunks_loader(Path("data/chunks.json"))
-    loaded_index = faiss.read_index("data/index.faiss")
+    loaded_index = index_loader("data/index.faiss")
     hybrid_results = hybrid_retriever(query = "penelties for animal cruelty", index = loaded_index, chunks = chunks, top_k = 5)
 
     reranked_results = reranker("penalities for animal cruelty", hybrid_results, top_k = 5)

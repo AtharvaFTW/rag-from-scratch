@@ -3,8 +3,13 @@ from sentence_transformers import SentenceTransformer
 import numpy as np
 import faiss
 
-MODEL = SentenceTransformer("sentence-transformers/all-MiniLM-L6-v2")
+MODEL = None
 
+def _get_model():
+    global MODEL
+    if MODEL is None:
+        MODEL = SentenceTransformer("sentence-transformers/all-MiniLM-L6-v2")
+    return MODEL
 
 def chunk_embedder(chunks: list[dict]) -> np.ndarray:
     """
@@ -16,7 +21,7 @@ def chunk_embedder(chunks: list[dict]) -> np.ndarray:
     """
 
     text_chunks = [chunk["text"] for chunk in chunks] # The model doesn't take the dict as is.
-    embeddings = MODEL.encode(text_chunks)
+    embeddings = _get_model().encode(text_chunks)
     
     return embeddings.astype(np.float32)
 
@@ -28,7 +33,7 @@ def query_embedder(query: str) -> np.ndarray:
     Args:
         query: The query string
     """
-    query_embed = MODEL.encode(query)
+    query_embed = _get_model().encode(query)
     query_embed = np.expand_dims(query_embed, axis = 0) # faiss expects in (1,384)
     return query_embed.astype(np.float32)
 
