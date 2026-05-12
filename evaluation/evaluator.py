@@ -1,7 +1,7 @@
 from pathlib import Path
 from src.embedder import index_loader
 from src.data_pipeline import chunks_loader
-from src.retrieval import hybrid_retriever,reranker
+from src.retrieval import hybrid_retriever,reranker, dense_retriever, bm25_retriever
 from src.generator import generate
 from ragas import evaluate, RunConfig
 from ragas.metrics import faithfulness, answer_relevancy, context_precision, context_recall
@@ -42,7 +42,7 @@ def eval_dataset_builder(eval_path: Path, chunks_path: Path, index_path: Path) -
     res = []
     
     for i in range(len(eval_set)):
-        with console.status(f"[{SPINNER_COLOUR}] Generating Dataset... ({((i+1)/len(eval_set))*100:.2f}%)", spinner ="star",speed = 0.5, spinner_style = SPINNER_COLOUR):
+        with console.status(f"[{SPINNER_COLOUR}] Generating Dataset ({((i+1)/len(eval_set))*100:.2f}%)", spinner ="star",speed = 0.5, spinner_style = SPINNER_COLOUR):
             query = eval_set[i]["question"]
             hybrid_results = hybrid_retriever(query, loaded_index, chunks, 10)
             reranked_results = reranker(query, hybrid_results, 5)
