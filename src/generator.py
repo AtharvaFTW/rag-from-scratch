@@ -1,12 +1,16 @@
-from ollama import Client
+from langchain_ollama import ChatOllama
 from dotenv import load_dotenv
 from src.llama_prompt import prompt
 import os
 load_dotenv()
 
-HOST = os.environ.get("OLLAMA_NGROK_TUNNEL")
-MODEL = os.environ.get("GEN_LLM")
-client = Client(host = HOST,  headers={'ngrok-skip-browser-warning': 'true'})
+llm = ChatOllama(
+    model = os.environ.get("EVAL_LLM"),
+    base_url = os.environ.get("OLLAMA_CLOUD_URL"),
+    temperature = 0.1,
+    client_kwargs = {"headers" : {"Authorization": "Bearer " + os.environ.get("OLLAMA_API_KEY")}}
+)
+
 
 
 def generate(query: str, chunks: list[dict]) -> str :
@@ -25,11 +29,10 @@ def generate(query: str, chunks: list[dict]) -> str :
 
     filled_prompt = prompt.format(query = query, context = context_str)
 
-    response = client.chat(model = MODEL , messages = [{
-        'role': 'user', 'content': f'{filled_prompt}'
-    }])
+    
+    response = llm.invoke(filled_prompt)
 
-    return response['message']['content'], context_for_ragas
+    return response.content, context_for_ragas
 
 if __name__ == "__main__":
     from src.embedder import index_loader

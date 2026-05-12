@@ -82,7 +82,7 @@ def run_ragas(eval_data: list[dict]) -> dict:
     res = []
 
     for i, sample in enumerate(eval_data):
-        with console.status(f"[{SPINNER_COLOUR}] Evaluating ... ({((i+1)/len(eval_data))*100:.2f}%)", spinner ="star",speed = 0.5, spinner_style = SPINNER_COLOUR):
+        with console.status(f"[{SPINNER_COLOUR}] Evaluating ({((i+1)/len(eval_data))*100:.2f}%)", spinner ="star",speed = 0.5, spinner_style = SPINNER_COLOUR):
         
             dataset = Dataset.from_list([sample])
             result = evaluate(dataset, metrics = metrics, embeddings = embeddings,llm = llm, run_config = run_config, raise_exceptions = False, show_progress = False)
