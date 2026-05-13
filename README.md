@@ -28,9 +28,10 @@ Python · FAISS · SentenceTransformers · Llama 3.1 8b via Ollama(generation) �
 - [x] Phase 7 - RAGAS Evaluation
 - [x] Phase 8 - A/B Testing
 - [x] Phase 9 - FastAPI 
-- [ ] Phase 10 - Streamlit &larr;  _Currently here_
-- [ ] Phase 11 - Pytest
-- [ ] Phase 12 - Docker
+- [x] Phase 10 - Streamlit
+- [x] Phase 11 - Pytest
+- [x] Phase 12 - Docker
+
 
 ## Architecture
 
@@ -100,4 +101,4 @@ _To be added after the Phase 10 completion_
 
 
 
-**Updated on** - 12 May 2026
+**Updated on** - 13 May 2026
