@@ -33,10 +33,6 @@ Python · FAISS · SentenceTransformers · Llama 3.1 8b via Ollama(generation) �
 - [x] Phase 12 - Docker
 
 
-## Architecture
-
-_To be added after the Phase 9 completion_
-
 ## Key Findings
 
 ### Phase 8 Hypotheses (pre-evaluation predictions)
@@ -97,8 +93,15 @@ To achieve the best of both worlds we set the chunk size to 512.
 
 ## Running the Project
 
-_To be added after the Phase 10 completion_
+```bash
+git clone https://github.com/AtharvaFTW/rag-from-scratch.git
+cd rag-from-scratch
+cp .env.example .env
+docker-compose up --build
+```
 
+- API: http://localhost:8000/docs
+- UI: http://localhost:8501
 
 
 **Updated on** - 13 May 2026
