@@ -17,6 +17,10 @@
 
 Python · FAISS · SentenceTransformers · Llama 3.1 8b via Ollama(generation) ·gemma4:31b-cloud via Ollama Cloud(evaluation)· RAGAS · FastAPI · Docker · Streamlit
 
+## Architecture
+
+![Architecture](assets/architecture.png)
+
 ## Project Phases
 
 - [x] Phase 1 - Corpus Selection
@@ -43,9 +47,7 @@ Python · FAISS · SentenceTransformers · Llama 3.1 8b via Ollama(generation) �
 2. **Cross-document retrieval imbalance** - Queries explicitly mentioning "Wildlife Protection Act " surface Prevention of Curelty Act chunks in top 5 results due to share vocab. 
     - Hypothesis : BM25 will outperform dense retrieval on cross-document queries because "Wildlife" is a distinctive keyword.
 
-## Architecture
 
-![Architecture](assets/architecture.png)
 
 ### Evaluation Infrastructure
 
