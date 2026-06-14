@@ -10,6 +10,4 @@ RUN uv pip install --system -r requirements.txt
 COPY . .
 
 EXPOSE 8000
-EXPOSE 8051
-
-CMD ["uvicorn","src.api:app","--reload"]
+EXPOSE 8501
